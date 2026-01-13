@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Student Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #43cea2, #185a9d);
+        }
+
+        .container {
+            width: 500px;
+            background: white;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #185a9d;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #43cea2;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2ebf91;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        /* THANK YOU SLIDER */
+        .slider {
+            display: none;
+            width: 500px;
+            margin: 100px auto;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            padding: 30px;
+            animation: slide 2s infinite;
+        }
+
+        .slide {
+            display: none;
+            font-size: 22px;
+            color: #185a9d;
+            font-weight: bold;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(-20px); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(-20px); }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- REGISTRATION FORM -->
+<div class="container" id="formBox">
+    <h2>College Student Registration</h2>
+
+    <form onsubmit="return registerStudent()">
+
+        <label>Full Name</label>
+        <input type="text" id="name">
+
+        <label>Date of Birth</label>
+        <input type="date" id="dob">
+
+        <label>Gender</label>
+        <select id="gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+        </select>
+
+        <label>Email</label>
+        <input type="email" id="email">
+
+        <label>Mobile</label>
+        <input type="text" id="mobile">
+
+        <label>Course</label>
+        <select id="course">
+            <option value="">Select Course</option>
+            <option>B.Tech</option>
+            <option>B.Sc</option>
+            <option>B.Com</option>
+            <option>BBA</option>
+            <option>MCA</option>
+        </select>
+
+        <label>Department</label>
+        <input type="text" id="department">
+
+        <label>Address</label>
+        <textarea id="address"></textarea>
+
+        <label>Username</label>
+        <input type="text" id="username">
+
+        <label>Password</label>
+        <input type="password" id="password">
+
+        <button type="submit">Register</button>
+
+        <p id="message" class="error"></p>
+    </form>
+</div>
+
+<!-- THANK YOU SLIDER -->
+<div class="slider" id="thankYouSlider">
+    <div class="slide">🎉 Thank You for Registration!</div>
+    <div class="slide">📚 Welcome to Our College</div>
+    <div class="slide">✅ Your Registration is Successful</div>
+</div>
+
+<script>
+function registerStudent() {
+    const fields = ["name","dob","gender","email","mobile","course",
+                    "department","address","username","password"];
+
+    for (let id of fields) {
+        if (document.getElementById(id).value.trim() === "") {
+            document.getElementById("message").innerText = "All fields are required!";
+            return false;
+        }
+    }
+
+    // Mobile validation
+    const mobile = document.getElementById("mobile").value;
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+        document.getElementById("message").innerText = "Invalid mobile number!";
+        return false;
+    }
+
+    // Success → Show Thank You Slider
+    document.getElementById("formBox").style.display = "none";
+    document.getElementById("thankYouSlider").style.display = "block";
+    startSlider();
+
+    return false;
+}
+
+/* SLIDER LOGIC */
+let index = 0;
+function startSlider() {
+    const slides = document.getElementsByClassName("slide");
+    for (let s of slides) s.style.display = "none";
+    index++;
+    if (index > slides.length) index = 1;
+    slides[index - 1].style.display = "block";
+    setTimeout(startSlider, 2000);
+}
+</script>
+
+</body>
+</html>
